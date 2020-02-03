@@ -1,9 +1,3 @@
-alert('JS Loaded');
-
-/*----- constants -----*/
-
-// 1) Win Combos - rows and cols combinations and position
-// 2) Players - 
 
 const COMBOS = [
     [0, 1, 2],
@@ -16,27 +10,65 @@ const COMBOS = [
     [2, 4, 6]
 ];
 
-const key = {
+const KEY = {
     '1': 'X',
     '-1': 'O',
     'null': ''
 };
-/*----- app's state (variables) -----*/
-//Data that determines 
-let turn, gameboard, winner;
-//unitialized. returns UNDEFINED
 
-/*----- cached element references -----*/
+let turn, gameboard, winner;
+
+
 
 const messageEl = document.getElementById('message');
 const squareEls = document.querySelectorAll('.square');
 
-/*----- event listeners -----*/
 
 document.getElementById('gameboard').addEventListener('click', handleClick);
+document.getElementById('reset').addEventListener('click', init);
 
-/*----- functions -----*/
+
+init();
+
+function init() {
+    turn = 1;
+    gameboard = new Array(9).fill(null);
+    winner = false;
+    render();
+}
+function render() {
+    gameboard.forEach(function(element, index) {
+    squareEls[index].textContent = KEY[element];
+  });
+    if (!winner) {
+        messageEl.textContent = `${KEY[turn]}'s turn!`;
+    }
+    else if(winner === 'T') {
+        messageEl.textContent = "It's a tie!";
+    }
+    else {
+        messageEl.textContent = `${KEY[winner]} is a winner!`;
+    }
+
+}
+
+function checkWinner() {
+
+  for(let i = 0; i < COMBOS.length; i++) {
+    if(Math.abs(gameboard[COMBOS[i][0]] 
+              + gameboard[COMBOS[i][1]] 
+              + gameboard[COMBOS[i][2]])===3) return gameboard[COMBOS[i][0]];
+  }
+    if (gameboard.includes(null)) return false;
+  return 'T';
+}
 
 function handleClick(evt) {
-    console.log(evt.target.dataset.index);
+    let selectedIndex = evt.target.dataset.index;
+    if (winner || gameboard[selectedIndex]) return;
+    gameboard[selectedIndex] = turn;
+    turn *= -1;
+    winner = checkWinner();
+    render();
 }
+
