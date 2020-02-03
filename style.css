@@ -1,0 +1,30 @@
+/* Reset CSS */
+* {
+    box-sizing: border-box;
+    margin: 0;
+}
+
+body {
+    text-align: center;
+}
+#gameboard {
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    width: 600px;
+    height: 600px;
+}
+
+.border-top { border-top: 2px solid gray;}
+.border-bottom { border-bottom: 2px solid gray;}
+.border-left { border-left: 2px solid gray;}
+.border-right { border-right: 2px solid gray;}
+
+.square {
+    border: 2px solid black;
+    height: 200px;
+    width: 200px;
+    font-size: 50px;
+    font-weight: 700;
+    color: black;
+}
